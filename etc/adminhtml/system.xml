@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="beebots" translate="label" sortOrder="950">
+            <label>Bee Bots</label>
+        </tab>
+        <section id="scheduled_cache_flush" translate="label" type="text" sortOrder="95" showInDefault="1" showInWebsite="0" showInStore="0">
+            <label>Scheduled Cache Flush</label>
+            <tab>beebots</tab>
+            <resource>BeeBots_ScheduledCacheFlush::config</resource>
+            <group id="scheduled_cache_flush" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Scheduled Cache Flush Configuration</label>
+                <field id="enabled" translate="label" sortOrder="1" type="select" showInDefault="1" showInStore="0" showInWebsite="0" canRestore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>beebots/scheduled_cache_flush/enabled</config_path>
+                </field>
+                <field id="flush_times" translate="label" sortOrder="2" type="textarea" showInDefault="1" showInStore="0" showInWebsite="0" canRestore="0">
+                    <label>Date times to flush the cache</label>
+                    <comment><![CDATA[For example:<br/><strong>2034-12-31</strong> <br/><strong>2035-12-31</strong> <br/>Each datetime must be on a new line]]></comment>
+                    <config_path>beebots/scheduled_cache_flush/flush_times</config_path>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
