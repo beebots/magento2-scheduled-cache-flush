@@ -1,0 +1,24 @@
+{
+    "name": "beebots/scheduledcacheflush",
+    "description": "",
+    "require": {
+        "php": "^7.3",
+        "magento/module-page-cache": "100.3.7"
+    },
+    "type": "magento2-module",
+    "version": "0.1.0",
+    "license": "MIT",
+    "support": {
+        "docs": "https://github.com/beebots/magento2-scheduled-cache-flush",
+        "issues": "https://github.com/beebots/magento2-scheduled-cache-flush/issues",
+        "source": "https://github.com/beebots/magento2-scheduled-cache-flush"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "BeeBots\\ScheduledCacheFlush\\": ""
+        }
+    }
+}
