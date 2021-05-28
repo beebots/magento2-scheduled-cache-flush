@@ -1,5 +1,5 @@
 {
-    "name": "beebots/scheduledcacheflush",
+    "name": "beebots/magento2-scheduled-cache-flush",
     "description": "",
     "require": {
         "php": "^7.3",
