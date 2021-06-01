@@ -4,6 +4,7 @@ namespace BeeBots\ScheduledCacheFlush\Test\Unit\Cron;
 
 use BeeBots\ScheduledCacheFlush\Cron\CacheFlusher;
 use BeeBots\ScheduledCacheFlush\Model\Config;
+use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -18,19 +19,34 @@ class CacheFlusherTest extends MockeryTestCase
     public function setUp(): void
     {
         $this->configMock = Mockery::mock(Config::class);
-        $this->cacheFlusher = new CacheFlusher($this->configMock);
-
+        $objectManager = new ObjectManager($this);
+        $this->cacheFlusher = $objectManager->getObject(
+            CacheFlusher::class,
+            [
+                'config' => $this->configMock,
+            ]
+        );
     }
 
     /**
      * Function: testCacheFlusherDoesNotRunWhenDisabled
      */
-    public function testCacheFlusherDoesNotRunWhenDisabled(): void
+    public function testDoesNotRunWhenDisabled(): void
     {
         $this->configMock->shouldReceive('isEnabled')
             ->andReturnFalse();
 
+        $this->cacheFlusher->execute();
         $this->configMock->shouldNotHaveReceived('getFlushTimes');
+    }
+
+    public function testRunsWhenEnabled(): void
+    {
+        $this->configMock->shouldReceive('isEnabled')
+            ->andReturnTrue();
+
+        $this->configMock->shouldReceive('getFlushTimes')
+            ->once();
 
         $this->cacheFlusher->execute();
     }
