@@ -85,17 +85,27 @@ class FlushCacheOnScheduleTest extends MockeryTestCase
             ->andReturnTrue();
 
         $this->configMock->shouldReceive('getFlushTimes');
-        $this->convertMultilineTextToArrayMock->shouldReceive('execute');
+        $this->convertMultilineTextToArrayMock->shouldReceive('execute')
+            ->andReturn(
+                [
+                    '2021-01-01',
+                    '2021-02-01',
+                    '2020-03-01'
+                ]
+            );
         $this->timezoneMock->shouldReceive('getConfigTimezone');
         $this->dateTimeZoneFactoryMock->shouldReceive('create');
-        $this->cacheFlusherMock->shouldReceive('execute');
+        $this->cacheFlusherMock->shouldReceive('execute')
+            ->once();
 
         $timeZone = new DateTimeZone('America/Denver');
         /** @noinspection PhpUnhandledExceptionInspection */
+        $currentTime = new DateTime('2021-02-01', $timeZone);
         $this->dateTimeFactoryMock->shouldReceive('create')->andReturn(
             new DateTime('2021-01-01', $timeZone),
             new DateTime('2021-02-01', $timeZone),
-            new DateTime('2020-03-01', $timeZone),
+            new DateTime('2021-03-01', $timeZone),
+            $currentTime,
         );
 
         $this->flushCacheOnSchedule->execute();
