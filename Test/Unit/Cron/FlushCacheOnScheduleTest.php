@@ -115,4 +115,36 @@ class FlushCacheOnScheduleTest extends MockeryTestCase
 
         $this->flushCacheOnSchedule->execute();
     }
+
+    /**
+     * Function: testNormalUseCase
+     *
+     * @throws Exception
+     */
+    public function testShouldNotRunOnEmptyConfig()
+    {
+        $this->configMock->shouldReceive('isEnabled')
+            ->andReturnTrue();
+
+        $this->configMock->shouldReceive('getFlushTimes')
+            ->andReturn('')
+            ->once();
+
+        $this->configMock->shouldNotReceive('setFlushTimes');
+        $this->convertMultilineTextToArrayMock->shouldReceive('execute')
+            ->andReturn([]);
+
+        $this->timezoneMock->shouldReceive('getConfigTimezone');
+        $this->dateTimeZoneFactoryMock->shouldReceive('create');
+        $this->cacheFlusherMock->shouldNotReceive('execute');
+
+        $timeZone = new DateTimeZone('America/Denver');
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $currentTime = new DateTime('2021-02-01', $timeZone);
+        $this->dateTimeFactoryMock->shouldReceive('create')->andReturn(
+            $currentTime,
+        );
+
+        $this->flushCacheOnSchedule->execute();
+    }
 }

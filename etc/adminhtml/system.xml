@@ -17,7 +17,7 @@
                 </field>
                 <field id="flush_times" translate="label" sortOrder="2" type="textarea" showInDefault="1" showInStore="0" showInWebsite="0" canRestore="0">
                     <label>Date times to flush the cache</label>
-                    <comment><![CDATA[For example:<br/><strong>2034-12-31T00:00:00-07:00</strong> <br/><strong>2035-12-31T00:00:00-07:00</strong> <br/>Each datetime must be on a new line]]></comment>
+                    <comment><![CDATA[For example:<br/><strong>2034-12-31T00:00:00-07:00</strong> <br/><strong>2035-12-31T16:05:00</strong> <br/>Each datetime must be on a new line. <br/>Times without the timezone offset(-07:00) will be in the timezone of the store]]></comment>
                     <config_path>beebots/scheduled_cache_flush/flush_times</config_path>
                 </field>
             </group>

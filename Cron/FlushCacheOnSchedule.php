@@ -70,10 +70,14 @@ class FlushCacheOnSchedule
         if (! $this->config->isEnabled()) {
             return $this;
         }
+        $flushTimesConfig = $this->config->getFlushTimes();
+        if ($flushTimesConfig === '') {
+            return $this;
+        }
 
         $storeTimeZoneString = $this->timezone->getConfigTimezone();
         $timeZone = $this->dateTimeZoneFactory->create(['timezone' => $storeTimeZoneString]);
-        $flushTimesConfig = $this->config->getFlushTimes();
+
         $flushTimeStrings = $this->convertMultilineTextToArray->execute($flushTimesConfig);
         $flushTimes = [];
         foreach ($flushTimeStrings as $flushTimeString) {
