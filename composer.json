@@ -3,10 +3,10 @@
     "description": "",
     "require": {
         "php": "^7.3",
-        "magento/module-page-cache": "100.3.7"
+        "magento/module-page-cache": "100.3.*"
     },
     "type": "magento2-module",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "MIT",
     "support": {
         "docs": "https://github.com/beebots/magento2-scheduled-cache-flush",
