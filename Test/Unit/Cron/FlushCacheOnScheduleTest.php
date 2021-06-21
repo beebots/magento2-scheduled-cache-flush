@@ -84,7 +84,12 @@ class FlushCacheOnScheduleTest extends MockeryTestCase
         $this->configMock->shouldReceive('isEnabled')
             ->andReturnTrue();
 
-        $this->configMock->shouldReceive('getFlushTimes');
+        $this->configMock->shouldReceive('getFlushTimes')
+            ->once();
+
+        $this->configMock->shouldReceive('setFlushTimes')
+            ->once();
+
         $this->convertMultilineTextToArrayMock->shouldReceive('execute')
             ->andReturn(
                 [

@@ -2,6 +2,8 @@
 
 namespace BeeBots\ScheduledCacheFlush\Model;
 
+use Magento\Config\Model\ResourceModel\Config as ConfigResource;
+use Magento\Framework\App\Config\ReinitableConfigInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 
 /**
@@ -11,17 +13,33 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
  */
 class Config
 {
+    const ENABLED_PATH = 'beebots/scheduled_cache_flush/flush_times';
+    const FLUSH_TIMES_PATH = 'beebots/scheduled_cache_flush/flush_times';
+
     /** @var ScopeConfigInterface */
     private $scopeConfig;
+
+    /** @var ReinitableConfigInterface */
+    private $reinitableConfig;
+
+    /** @var ConfigResource */
+    private $configResource;
 
     /**
      * Config constructor.
      *
      * @param ScopeConfigInterface $scopeConfig
+     * @param ReinitableConfigInterface $reinitableConfig
+     * @param ConfigResource $configResource
      */
-    public function __construct(ScopeConfigInterface $scopeConfig)
-    {
+    public function __construct(
+        ScopeConfigInterface $scopeConfig,
+        ReinitableConfigInterface $reinitableConfig,
+        ConfigResource $configResource
+    ) {
         $this->scopeConfig = $scopeConfig;
+        $this->reinitableConfig = $reinitableConfig;
+        $this->configResource = $configResource;
     }
 
     /**
@@ -31,7 +49,7 @@ class Config
      */
     public function isEnabled(): bool
     {
-        return $this->scopeConfig->isSetFlag('beebots/scheduled_cache_flush/enabled');
+        return (bool)$this->scopeConfig->isSetFlag(self::ENABLED_PATH);
     }
 
     /**
@@ -41,6 +59,23 @@ class Config
      */
     public function getFlushTimes(): string
     {
-        return (int) $this->scopeConfig->getValue('beebots/scheduled_cache_flush/flush_times');
+        return (string)$this->reinitableConfig->getValue(self::FLUSH_TIMES_PATH);
+    }
+
+    /**
+     * Function: setFlushTimes
+     *
+     * @param string $flushTimes
+     *
+     * @return Config
+     */
+    public function setFlushTimes(string $flushTimes): Config
+    {
+        $this->configResource->saveConfig(
+            self::FLUSH_TIMES_PATH,
+            $flushTimes
+        );
+
+        return $this;
     }
 }

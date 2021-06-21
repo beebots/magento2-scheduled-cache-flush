@@ -6,6 +6,7 @@ use BeeBots\ScheduledCacheFlush\Model\Config;
 use BeeBots\ScheduledCacheFlush\Model\DateTimeZoneFactory;
 use BeeBots\ScheduledCacheFlush\Service\CacheFlusher;
 use BeeBots\ScheduledCacheFlush\Utilities\ConvertMultilineTextToArray;
+use DateTime;
 use Magento\Framework\Intl\DateTimeFactory;
 use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 
@@ -64,10 +65,10 @@ class FlushCacheOnSchedule
      * Function: execute
      *
      */
-    public function execute(): void
+    public function execute(): FlushCacheOnSchedule
     {
         if (! $this->config->isEnabled()) {
-            return;
+            return $this;
         }
 
         $storeTimeZoneString = $this->timezone->getConfigTimezone();
@@ -97,7 +98,7 @@ class FlushCacheOnSchedule
         }
 
         if (!$shouldFlush) {
-            return;
+            return $this;
         }
 
         // Flush the cache
@@ -105,7 +106,16 @@ class FlushCacheOnSchedule
 
         // Remove past dates from the list
         $flushTimes = array_slice($flushTimes, $firstIndexToKeep);
+        $flushTimeStrings = [];
+        foreach ($flushTimes as $flushTime) {
+            $flushTimeStrings[] = $flushTime->format(DateTime::W3C);
+        }
+        // Write the remaining flush times back to the config
+        $flushTimesConfig = count($flushTimeStrings) > 0
+            ? implode(PHP_EOL, $flushTimeStrings)
+            : '';
 
-        // TODO: Write the flushtimes back to the config
+        $this->config->setFlushTimes($flushTimesConfig);
+        return $this;
     }
 }
