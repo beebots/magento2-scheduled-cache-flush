@@ -2,7 +2,7 @@
 
 namespace BeeBots\ScheduledCacheFlush\Service;
 
-use Magento\Framework\App\Cache\Frontend\Pool;
+use Magento\Framework\App\Cache\Manager;
 use Magento\Framework\Event\ManagerInterface;
 
 /**
@@ -12,24 +12,24 @@ use Magento\Framework\Event\ManagerInterface;
  */
 class CacheFlusher
 {
-    /** @var Pool */
-    private $cacheFrontendPool;
-
     /** @var ManagerInterface */
     private $eventManager;
+
+    /** @var Manager */
+    private $cacheManager;
 
     /**
      * CacheFlusher constructor.
      *
-     * @param Pool $cacheFrontendPool
      * @param ManagerInterface $eventManager
+     * @param Manager $cacheManager
      */
     public function __construct(
-        Pool $cacheFrontendPool,
-        ManagerInterface $eventManager
+        ManagerInterface $eventManager,
+        Manager $cacheManager
     ) {
-        $this->cacheFrontendPool = $cacheFrontendPool;
         $this->eventManager = $eventManager;
+        $this->cacheManager = $cacheManager;
     }
 
     /**
@@ -39,9 +39,7 @@ class CacheFlusher
      */
     public function execute(): CacheFlusher
     {
-        foreach ($this->cacheFrontendPool as $cacheFrontend) {
-            $cacheFrontend->clean();
-        }
+        $this->cacheManager->flush($this->cacheManager->getAvailableTypes());
         $this->eventManager->dispatch('adminhtml_cache_flush_system');
         return $this;
     }
