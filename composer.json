@@ -7,7 +7,7 @@
         "magento/module-cron": "100.3.*"
     },
     "type": "magento2-module",
-    "version": "1.0.2",
+    "version": "1.0.4",
     "license": "MIT",
     "support": {
         "docs": "https://github.com/beebots/magento2-scheduled-cache-flush",
