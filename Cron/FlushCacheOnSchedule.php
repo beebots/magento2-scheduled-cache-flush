@@ -109,7 +109,10 @@ class FlushCacheOnSchedule
         $this->cacheFlusher->execute();
 
         // Remove past dates from the list
-        $flushTimes = array_slice($flushTimes, $firstIndexToKeep);
+        $flushTimes = $firstIndexToKeep !== null
+            ? array_slice($flushTimes, $firstIndexToKeep)
+            : [];
+
         $flushTimeStrings = [];
         foreach ($flushTimes as $flushTime) {
             $flushTimeStrings[] = $flushTime->format(DateTime::W3C);
