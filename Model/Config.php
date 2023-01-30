@@ -13,7 +13,7 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
  */
 class Config
 {
-    const ENABLED_PATH = 'beebots/scheduled_cache_flush/flush_times';
+    const ENABLED_PATH = 'beebots/scheduled_cache_flush/enabled';
     const FLUSH_TIMES_PATH = 'beebots/scheduled_cache_flush/flush_times';
 
     /** @var ScopeConfigInterface */
