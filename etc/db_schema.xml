@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="beebots_scheduled_cache_flush" resource="default" engine="innodb" comment="This table stores the cache flush schedule">
+        <column name="id" xsi:type="int" nullable="false" comment="Primary Identifier" unsigned="true" identity="true"/>
+        <column name="flush_time" xsi:type="datetime" nullable="false" comment="Flush Date Time" />
+        <column name="flush_tags" xsi:type="varchar" nullable="false" default="*" comment="Tags to flush" />
+        <column name="created_at" xsi:type="timestamp" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Flush time created time"/>
+        <column name="updated_at" xsi:type="timestamp" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Flush time updated time"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+    </table>
+</schema>
