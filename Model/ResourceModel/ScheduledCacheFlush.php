@@ -1,15 +1,23 @@
 <?php
 namespace BeeBots\ScheduledCacheFlush\Model\ResourceModel;
 
-use Magento\Catalog\Model\ResourceModel\AbstractResource;
+use BeeBots\ScheduledCacheFlush\Model\ScheduledCacheFlush as ScheduledCacheFlushModel;
+use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 
-class ScheduledCacheFlush extends AbstractResource
+/**
+ * Resource Model for ScheduledCacheFlush
+ */
+class ScheduledCacheFlush extends AbstractDb
 {
-    public function getEntityType()
+    public const TABLE_NAME = 'beebots_scheduled_cache_flush';
+
+    /**
+     * Function: _construct
+     *
+     * @return void
+     */
+    protected function _construct(): void
     {
-        if (empty($this->_type)) {
-            $this->setType(\Magento\Catalog\Model\Category::ENTITY);
-        }
-        return parent::getEntityType();
+        $this->_init(self::TABLE_NAME, ScheduledCacheFlushModel::ID);
     }
 }
