@@ -5,6 +5,8 @@
         <sequence>
             <module name="Magento_PageCache"/>
             <module name="Magento_Cron"/>
+            <module name="Magento_Backend"/>
+            <module name="Magento_Ui"/>
         </sequence>
     </module>
 </config>
