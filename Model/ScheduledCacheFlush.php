@@ -1,5 +1,5 @@
 <?php
-namespace BeeBots\ScheduledCacheFlush\Model\ResourceModel;
+namespace BeeBots\ScheduledCacheFlush\Model;
 
 use Magento\Framework\Model\AbstractModel;
 
