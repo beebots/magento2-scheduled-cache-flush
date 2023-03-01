@@ -6,13 +6,15 @@
 
 namespace BeeBots\ScheduledCacheFlush\Controller\Adminhtml\Manage;
 
+use BeeBots\ScheduledCacheFlush\Model\ResourceModel\ScheduledCacheFlush;
+use BeeBots\ScheduledCacheFlush\Model\ResourceModel\ScheduledCacheFlush\CollectionFactory;
+use Exception;
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Backend\Model\View\Result\Redirect;
-use Beebots\ScheduledCacheFlush\Model\ResourceModel\ScheduledCacheFlush\CollectionFactory;
-use Magento\Catalog\Api\CategoryRepositoryInterface;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\Controller\ResultFactory;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NotFoundException;
 use Magento\Ui\Component\MassAction\Filter;
 
@@ -21,7 +23,7 @@ class MassDelete extends Action implements HttpPostActionInterface
     /**
      * Authorization level
      */
-    const ADMIN_RESOURCE = 'BeeBots_ScheduledCacheFlush::manage';
+    public const ADMIN_RESOURCE = 'BeeBots_ScheduledCacheFlush::manage';
 
     /**
      * @var CollectionFactory
@@ -29,57 +31,60 @@ class MassDelete extends Action implements HttpPostActionInterface
     protected $collectionFactory;
 
     /**
-     * @var CategoryRepositoryInterface
-     */
-    private $categoryRepository;
-
-    /**
      * @var Filter
      */
     protected $filter;
 
+    private ScheduledCacheFlush $scheduledCacheFlushResource;
+
     /**
-     * Constructor
-     *
      * @param Context $context
      * @param Filter $filter
      * @param CollectionFactory $collectionFactory
-     * @param CategoryRepositoryInterface $categoryRepository
+     * @param ScheduledCacheFlush $scheduledCacheFlushResource
      */
     public function __construct(
         Context $context,
         Filter $filter,
         CollectionFactory $collectionFactory,
-        CategoryRepositoryInterface $categoryRepository
+        ScheduledCacheFlush $scheduledCacheFlushResource
     ) {
         $this->filter = $filter;
         $this->collectionFactory = $collectionFactory;
-        $this->categoryRepository = $categoryRepository;
+        $this->scheduledCacheFlushResource = $scheduledCacheFlushResource;
+
         parent::__construct($context);
     }
 
     /**
-     * Category delete action
+     * Function: execute
      *
      * @return Redirect
+     * @throws NotFoundException
+     * @throws LocalizedException
+     * @throws Exception
      */
     public function execute(): Redirect
     {
+        /** @noinspection PhpPossiblePolymorphicInvocationInspection */
         if (!$this->getRequest()->isPost()) {
             throw new NotFoundException(__('Page not found'));
         }
         $collection = $this->filter->getCollection($this->collectionFactory->create());
-        $categoryDeleted = 0;
-        foreach ($collection->getItems() as $category) {
-            $this->categoryRepository->delete($category);
-            $categoryDeleted++;
+        $deletedCount = 0;
+        foreach ($collection->getItems() as $scheduledCacheFlush) {
+            $this->scheduledCacheFlushResource->delete($scheduledCacheFlush);
+            $deletedCount++;
         }
 
-        if ($categoryDeleted) {
+        if ($deletedCount) {
             $this->messageManager->addSuccessMessage(
-                __('A total of %1 record(s) have been deleted.', $categoryDeleted)
+                __('A total of %1 record(s) have been deleted.', $deletedCount)
             );
         }
-        return $this->resultFactory->create(ResultFactory::TYPE_REDIRECT)->setPath('dev_grid/index/index');
+
+        /** @noinspection PhpPossiblePolymorphicInvocationInspection */
+        return $this->resultFactory->create(ResultFactory::TYPE_REDIRECT)
+            ->setPath('scheduled_cache_flush/manage/index');
     }
 }

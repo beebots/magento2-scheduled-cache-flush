@@ -14,9 +14,10 @@
         <item name="buttons" xsi:type="array">
             <item name="add" xsi:type="array">
                 <item name="name" xsi:type="string">add</item>
-                <item name="label" xsi:type="string">View Category Tree</item>
+                <item name="label" xsi:type="string">Add Scheduled Cache Flush</item>
                 <item name="class" xsi:type="string">primary</item>
-                <item name="url" xsi:type="string">catalog/category/index</item>
+                <!-- TODO: Update this to point to create URL -->
+                <item name="url" xsi:type="string">*/*/index</item>
             </item>
         </item>
     </argument>
@@ -26,13 +27,13 @@
                       xsi:type="string">BeeBots\ScheduledCacheFlush\Ui\DataProvider\Manage\ListingDataProvider
             </argument>
             <argument name="name" xsi:type="string">scheduled_cache_flush_manage_listing_data_source</argument>
-            <argument name="primaryFieldName" xsi:type="string">entity_id</argument>
-            <argument name="requestFieldName" xsi:type="string">entity_id</argument>
+            <argument name="primaryFieldName" xsi:type="string">id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="update_url" xsi:type="url" path="mui/index/render"/>
                     <item name="storageConfig" xsi:type="array">
-                        <item name="indexField" xsi:type="string">entity_id</item>
+                        <item name="indexField" xsi:type="string">id</item>
                     </item>
                 </item>
             </argument>
@@ -54,7 +55,7 @@
                     </item>
                     <item name="displayArea" xsi:type="string">bottom</item>
                     <item name="component" xsi:type="string">Magento_Ui/js/grid/tree-massactions</item>
-                    <item name="indexField" xsi:type="string">entity_id</item>
+                    <item name="indexField" xsi:type="string">id</item>
                 </item>
             </argument>
             <action name="delete">
@@ -62,7 +63,7 @@
                     <item name="config" xsi:type="array">
                         <item name="type" xsi:type="string">delete</item>
                         <item name="label" xsi:type="string" translate="true">Delete</item>
-                        <item name="url" xsi:type="url" path="dev_grid/category/massDelete"/>
+                        <item name="url" xsi:type="url" path="*/*/massDelete"/>
                         <item name="confirm" xsi:type="array">
                             <item name="title" xsi:type="string" translate="true">Delete items</item>
                             <item name="message" xsi:type="string"
@@ -144,7 +145,8 @@
                     <item name="indexField" xsi:type="string">id</item>
                 </item>
             </argument>
-            <argument name="viewUrl" xsi:type="string">catalog/category/view</argument>
+            <!-- TOOD: update this to detail page -->
+            <argument name="viewUrl" xsi:type="string">*/*/index</argument>
         </actionsColumn>
     </columns>
 </listing>
