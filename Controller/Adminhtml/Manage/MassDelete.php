@@ -23,7 +23,7 @@ class MassDelete extends Action implements HttpPostActionInterface
     /**
      * Authorization level
      */
-    public const ADMIN_RESOURCE = 'BeeBots_ScheduledCacheFlush::manage';
+    public const ADMIN_RESOURCE = 'Magento_Backend::cache';
 
     /**
      * @var CollectionFactory

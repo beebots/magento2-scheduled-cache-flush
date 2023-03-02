@@ -145,8 +145,7 @@
                     <item name="indexField" xsi:type="string">id</item>
                 </item>
             </argument>
-            <!-- TOOD: update this to detail page -->
-            <argument name="viewUrl" xsi:type="string">*/*/index</argument>
+            <argument name="viewUrl" xsi:type="string">*/*/edit</argument>
         </actionsColumn>
     </columns>
 </listing>

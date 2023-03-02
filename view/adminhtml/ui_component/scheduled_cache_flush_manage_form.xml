@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">scheduled_cache_flush_manage_form.scheduled_cache_flush_manage_form_data_source</item>
+            <item name="deps" xsi:type="string">scheduled_cache_flush_manage_form.scheduled_cache_flush_manage_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Sample Form</item>
+        <item name="layout" xsi:type="array">
+            <item name="type" xsi:type="string">tabs</item>
+        </item>
+<!--TODO: Buttons -->
+<!--        <item name="buttons" xsi:type="array">-->
+<!--            <item name="back" xsi:type="string">BeeBots\ScheduledCacheFlush\Block\Adminhtml\Contact\Edit\BackButton</item>-->
+<!--            <item name="delete" xsi:type="string">BeeBots\ScheduledCacheFlush\Block\Adminhtml\Contact\Edit\DeleteButton</item>-->
+<!--            <item name="reset" xsi:type="string">BeeBots\ScheduledCacheFlush\Block\Adminhtml\Contact\Edit\ResetButton</item>-->
+<!--            <item name="save" xsi:type="string">BeeBots\ScheduledCacheFlush\Block\Adminhtml\Contact\Edit\SaveButton</item>-->
+<!--        </item>-->
+    </argument>
+
+    <dataSource name="scheduled_cache_flush_manage_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">BeeBots\ScheduledCacheFlush\Ui\DataProvider\Manage\FormDataProvider</argument>
+            <argument name="name" xsi:type="string">scheduled_cache_flush_manage_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+
+    <fieldset name="scheduled_cache_flush">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">Sample Fieldset</item>
+            </item>
+        </argument>
+
+        <field name="id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">scheduled_cache_flush</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="flush_time">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Flush Time</item>
+                    <item name="formElement" xsi:type="string">date</item>
+                    <item name="dataType" xsi:type="string">date</item>
+                    <item name="pickerDateTimeFormat" xsi:type="string">YYYY-MM-DDTHH:mm:ss.sssZ</item>
+                    <item name="options" xsi:type="array">
+                        <item name="showsTime" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="source" xsi:type="string">scheduled_cache_flush</item>
+                </item>
+            </argument>
+        </field>
+
+
+        <!-- This field has data type 'text' and standard 'input' form element and looks like input -->
+        <field name="flush_tags">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string">Flush Tags</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">scheduled_cache_flush</item>
+                </item>
+            </argument>
+        </field>
+
+    </fieldset>
+</form>

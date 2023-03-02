@@ -3,7 +3,7 @@ namespace BeeBots\ScheduledCacheFlush\Ui\Component\Manage\Listing\Column;
 
 use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
-use Magento\Framework\Url;
+use Magento\Backend\Model\UrlInterface;
 use Magento\Ui\Component\Listing\Columns\Column;
 
 class Actions extends Column
@@ -23,7 +23,7 @@ class Actions extends Column
      *
      * @param ContextInterface $context
      * @param UiComponentFactory $uiComponentFactory
-     * @param Url $urlBuilder
+     * @param UrlInterface $urlBuilder
      * @param string $viewUrl
      * @param array $components
      * @param array $data
@@ -31,7 +31,7 @@ class Actions extends Column
     public function __construct(
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
-        Url $urlBuilder,
+        UrlInterface $urlBuilder,
         $viewUrl = '',
         array $components = [],
         array $data = []
@@ -54,8 +54,7 @@ class Actions extends Column
                 $name = $this->getData('name');
                 if (isset($item['id'])) {
                     $item[$name]['view']   = [
-                        'href'  => $this->_urlBuilder->getUrl($this->_viewUrl, ['id' => $item['id']]),
-                        'target' => '_blank',
+                        'href'  => $this->_urlBuilder->getUrl('scheduled_cache_flush/manage/edit', ['id' => $item['id']]),
                         'label' => __('Edit')
                     ];
                 }

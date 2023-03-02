@@ -6,7 +6,7 @@
              sortOrder="10"
              module="BeeBots_ScheduledCacheFlush"
              action="scheduled_cache_flush/manage"
-             resource="BeeBots_ScheduledCacheFlush::manage"
+             resource="Magento_Backend::cache"
              parent="Magento_Backend::system_tools"/>
     </menu>
 </config>
