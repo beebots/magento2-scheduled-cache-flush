@@ -16,8 +16,7 @@
                 <item name="name" xsi:type="string">add</item>
                 <item name="label" xsi:type="string">Add Scheduled Cache Flush</item>
                 <item name="class" xsi:type="string">primary</item>
-                <!-- TODO: Update this to point to create URL -->
-                <item name="url" xsi:type="string">*/*/index</item>
+                <item name="url" xsi:type="string">*/*/edit</item>
             </item>
         </item>
     </argument>

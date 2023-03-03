@@ -59,7 +59,7 @@ class Edit extends Action implements HttpGetActionInterface
         $model = $this->scheduledCacheFlushFactory->create();
 
         if ($id) {
-            $this->scheduledCacheFlushResource->load($model, $id, 'id');
+            $this->scheduledCacheFlushResource->load($model, $id);
             if (!$model->getId()) {
                 $this->messageManager->addErrorMessage(__('This scheduled cache flush no longer exists.'));
                 $resultRedirect = $this->resultRedirectFactory->create();

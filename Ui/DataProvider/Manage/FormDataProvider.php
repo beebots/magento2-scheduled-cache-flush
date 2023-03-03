@@ -79,7 +79,7 @@ class FormDataProvider extends AbstractDataProvider
         if (!$id) {
             return $scheduledCacheFlush;
         }
-        $this->scheduledCacheFlushResource->load($scheduledCacheFlush, $id, 'id');
+        $this->scheduledCacheFlushResource->load($scheduledCacheFlush, $id);
         return $scheduledCacheFlush;
     }
 
