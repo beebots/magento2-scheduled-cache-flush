@@ -4,125 +4,106 @@ namespace BeeBots\ScheduledCacheFlush\Cron;
 
 use BeeBots\ScheduledCacheFlush\Model\Config;
 use BeeBots\ScheduledCacheFlush\Model\DateTimeZoneFactory;
+use BeeBots\ScheduledCacheFlush\Model\ResourceModel\ScheduledCacheFlush as ScheduledCacheFlushResource;
+use BeeBots\ScheduledCacheFlush\Model\ResourceModel\ScheduledCacheFlush\CollectionFactory;
+use BeeBots\ScheduledCacheFlush\Model\ScheduledCacheFlush;
 use BeeBots\ScheduledCacheFlush\Service\CacheFlusher;
-use BeeBots\ScheduledCacheFlush\Utilities\ConvertMultilineTextToArray;
-use DateTime;
+use Exception;
+use Magento\Framework\Api\SortOrder;
 use Magento\Framework\Intl\DateTimeFactory;
 use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
+use Psr\Log\LoggerInterface;
 
 /**
- * Class CacheFlusher
+ * FlushCacheOnSchedule Cron Class
  *
- * @package BeeBots\ScheduledCacheFlush\Cron
  */
 class FlushCacheOnSchedule
 {
-    /** @var Config */
-    private $config;
+    private Config $config;
 
-    /** @var ConvertMultilineTextToArray */
-    private $convertMultilineTextToArray;
+    private TimezoneInterface $timezone;
 
-    /** @var TimezoneInterface */
-    private $timezone;
+    private DateTimeFactory $dateTimeFactory;
 
-    /** @var DateTimeFactory */
-    private $dateTimeFactory;
+    private DateTimeZoneFactory $dateTimeZoneFactory;
 
-    /** @var DateTimeZoneFactory */
-    private $dateTimeZoneFactory;
+    private CacheFlusher $cacheFlusher;
 
-    /** @var CacheFlusher */
-    private $cacheFlusher;
+    private CollectionFactory $collectionFactory;
+
+    private ScheduledCacheFlushResource $scheduledCacheFlushResource;
+
+    private LoggerInterface $logger;
 
     /**
      * CacheFlusher constructor.
      *
      * @param Config $config
-     * @param ConvertMultilineTextToArray $convertMultilineTextToArray
      * @param TimezoneInterface $timezone
      * @param DateTimeFactory $dateTimeFactory
      * @param DateTimeZoneFactory $dateTimeZoneFactory
      * @param CacheFlusher $cacheFlusher
+     * @param CollectionFactory $collectionFactory
+     * @param ScheduledCacheFlushResource $scheduledCacheFlushResource
      */
     public function __construct(
         Config $config,
-        ConvertMultilineTextToArray $convertMultilineTextToArray,
         TimezoneInterface $timezone,
         DateTimeFactory $dateTimeFactory,
         DateTimeZoneFactory $dateTimeZoneFactory,
-        CacheFlusher $cacheFlusher
+        CacheFlusher $cacheFlusher,
+        CollectionFactory $collectionFactory,
+        ScheduledCacheFlushResource $scheduledCacheFlushResource,
+        LoggerInterface $logger
     ) {
         $this->config = $config;
-        $this->convertMultilineTextToArray = $convertMultilineTextToArray;
         $this->timezone = $timezone;
         $this->dateTimeFactory = $dateTimeFactory;
         $this->dateTimeZoneFactory = $dateTimeZoneFactory;
         $this->cacheFlusher = $cacheFlusher;
+        $this->collectionFactory = $collectionFactory;
+        $this->scheduledCacheFlushResource = $scheduledCacheFlushResource;
+        $this->logger = $logger;
     }
 
     /**
      * Function: execute
      *
+     * @return $this
      */
     public function execute(): FlushCacheOnSchedule
     {
         if (! $this->config->isEnabled()) {
             return $this;
         }
-        $flushTimesConfig = $this->config->getFlushTimes();
-        if ($flushTimesConfig === '') {
-            return $this;
-        }
 
         $storeTimeZoneString = $this->timezone->getConfigTimezone();
         $timeZone = $this->dateTimeZoneFactory->create(['timezone' => $storeTimeZoneString]);
-
-        $flushTimeStrings = $this->convertMultilineTextToArray->execute($flushTimesConfig);
-        $flushTimes = [];
-        foreach ($flushTimeStrings as $flushTimeString) {
-            $flushTimes[] = $this->dateTimeFactory->create($flushTimeString, $timeZone);
-        }
-
-        // Sort the dates low to high
-        sort($flushTimes);
-
-        $shouldFlush = false;
-        $firstIndexToKeep = null;
         $currentTime = $this->dateTimeFactory->create('now', $timeZone);
 
-        // Determine if we should flush the cache
-        foreach ($flushTimes as $index => $flushTime) {
-            // Stop on the first future date
-            if ($flushTime > $currentTime) {
-                $firstIndexToKeep = $index;
-                break;
+        $currentCacheFlushes = $this->collectionFactory->create();
+        $currentCacheFlushes
+            ->addFieldToFilter(ScheduledCacheFlush::FLUSH_TIME, ['lteq' => $currentTime->format('Y-m-d H:i:s')])
+            ->addOrder(
+                ScheduledCacheFlush::FLUSH_TIME,
+                SortOrder::SORT_ASC
+            );
+
+        /** @var ScheduledCacheFlush $scheduledCacheFlush */
+        foreach ($currentCacheFlushes as $scheduledCacheFlush) {
+            $tags = $scheduledCacheFlush->getFlushTags()
+                ? explode(' ', $scheduledCacheFlush->getFlushTags())
+                : ['.*'];
+
+            try {
+                $this->cacheFlusher->execute($tags);
+                $this->scheduledCacheFlushResource->delete($scheduledCacheFlush);
+            } catch (Exception $exception) {
+                $this->logger->error('An error occurred while attempting a scheduled cache flush', ['exception' => $exception]);
             }
-            $shouldFlush = true;
         }
 
-        if (!$shouldFlush) {
-            return $this;
-        }
-
-        // Flush the cache
-        $this->cacheFlusher->execute();
-
-        // Remove past dates from the list
-        $flushTimes = $firstIndexToKeep !== null
-            ? array_slice($flushTimes, $firstIndexToKeep)
-            : [];
-
-        $flushTimeStrings = [];
-        foreach ($flushTimes as $flushTime) {
-            $flushTimeStrings[] = $flushTime->format(DateTime::W3C);
-        }
-        // Write the remaining flush times back to the config
-        $flushTimesConfig = count($flushTimeStrings) > 0
-            ? implode(PHP_EOL, $flushTimeStrings)
-            : '';
-
-        $this->config->setFlushTimes($flushTimesConfig);
         return $this;
     }
 }

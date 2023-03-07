@@ -2,45 +2,46 @@
 
 namespace BeeBots\ScheduledCacheFlush\Service;
 
-use Magento\Framework\App\Cache\Manager;
 use Magento\Framework\Event\ManagerInterface;
+use Magento\Framework\Indexer\CacheContextFactory;
 
 /**
- * Class CacheFlusher
- *
- * @package BeeBots\ScheduledCacheFlush\Service
+ * Used to flush a the magento full page cache
  */
 class CacheFlusher
 {
     /** @var ManagerInterface */
     private $eventManager;
 
-    /** @var Manager */
-    private $cacheManager;
+    private CacheContextFactory $cacheContextFactory;
 
     /**
      * CacheFlusher constructor.
      *
      * @param ManagerInterface $eventManager
-     * @param Manager $cacheManager
+     * @param CacheContextFactory $cacheContextFactory
      */
     public function __construct(
         ManagerInterface $eventManager,
-        Manager $cacheManager
+        CacheContextFactory $cacheContextFactory
     ) {
         $this->eventManager = $eventManager;
-        $this->cacheManager = $cacheManager;
+        $this->cacheContextFactory = $cacheContextFactory;
     }
 
     /**
      * Function: execute
      *
+     * @param array $tags
+     *
      * @return $this
      */
-    public function execute(): CacheFlusher
+    public function execute(array $tags = ['.*']): CacheFlusher
     {
-        $this->cacheManager->flush($this->cacheManager->getAvailableTypes());
-        $this->eventManager->dispatch('adminhtml_cache_flush_system');
+        $cacheContext = $this->cacheContextFactory->create();
+        $cacheContext->registerTags($tags);
+        $this->eventManager->dispatch('clean_cache_by_tags', ['object' => $cacheContext]);
+
         return $this;
     }
 }
