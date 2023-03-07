@@ -2,6 +2,7 @@
 
 namespace BeeBots\ScheduledCacheFlush\Cron;
 
+use BeeBots\ScheduledCacheFlush\Api\Data\ScheduledCacheFlushInterface;
 use BeeBots\ScheduledCacheFlush\Model\Config;
 use BeeBots\ScheduledCacheFlush\Model\DateTimeZoneFactory;
 use BeeBots\ScheduledCacheFlush\Model\ResourceModel\ScheduledCacheFlush as ScheduledCacheFlushResource;
@@ -87,9 +88,9 @@ class FlushCacheOnSchedule
 
         $currentCacheFlushes = $this->collectionFactory->create();
         $currentCacheFlushes
-            ->addFieldToFilter(ScheduledCacheFlush::FLUSH_TIME, ['lteq' => $currentTimeString])
+            ->addFieldToFilter(ScheduledCacheFlushInterface::FLUSH_TIME, ['lteq' => $currentTimeString])
             ->addOrder(
-                ScheduledCacheFlush::FLUSH_TIME,
+                ScheduledCacheFlushInterface::FLUSH_TIME,
                 SortOrder::SORT_ASC
             );
 

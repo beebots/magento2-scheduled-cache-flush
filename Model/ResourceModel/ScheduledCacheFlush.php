@@ -1,7 +1,7 @@
 <?php
 namespace BeeBots\ScheduledCacheFlush\Model\ResourceModel;
 
-use BeeBots\ScheduledCacheFlush\Model\ScheduledCacheFlush as ScheduledCacheFlushModel;
+use BeeBots\ScheduledCacheFlush\Api\Data\ScheduledCacheFlushInterface;
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 
 /**
@@ -18,6 +18,6 @@ class ScheduledCacheFlush extends AbstractDb
      */
     protected function _construct(): void
     {
-        $this->_init(self::TABLE_NAME, ScheduledCacheFlushModel::ID);
+        $this->_init(self::TABLE_NAME, ScheduledCacheFlushInterface::ID);
     }
 }

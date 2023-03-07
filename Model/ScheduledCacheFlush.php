@@ -2,17 +2,13 @@
 
 namespace BeeBots\ScheduledCacheFlush\Model;
 
-use Magento\Framework\Model\AbstractModel;
+use BeeBots\ScheduledCacheFlush\Api\Data\ScheduledCacheFlushInterface;
 use BeeBots\ScheduledCacheFlush\Model\ResourceModel\ScheduledCacheFlush as ScheduledCacheFlushResource;
+use DateTime;
+use Magento\Framework\Model\AbstractModel;
 
-class ScheduledCacheFlush extends AbstractModel
+class ScheduledCacheFlush extends AbstractModel implements ScheduledCacheFlushInterface
 {
-    public const ID = 'id';
-    public const FLUSH_TIME = 'flush_time';
-    public const FLUSH_TAGS = 'flush_tags';
-    public const CREATED_AT = 'created_at';
-    public const UPDATED_AT = 'updated_at';
-
     /**
      * Function: _construct
      *
@@ -26,51 +22,51 @@ class ScheduledCacheFlush extends AbstractModel
     /**
      * Function: getId
      *
-     * @return array|mixed|null
+     * @return int|null
      */
-    public function getId(): mixed
+    public function getId(): ?int
     {
-        return parent::getData(self::ID);
+        return parent::getData(ScheduledCacheFlushInterface::ID);
     }
 
     /**
      * Function: getFlushTime
      *
-     * @return array|mixed|null
+     * @return ?DateTime
      */
-    public function getFlushTime(): mixed
+    public function getFlushTime(): ?DateTime
     {
-        return parent::getData(self::FLUSH_TIME);
+        return parent::getData(ScheduledCacheFlushInterface::FLUSH_TIME);
     }
 
     /**
      * Function: getFlushTags
      *
-     * @return array|mixed|null
+     * @return ?string
      */
-    public function getFlushTags(): mixed
+    public function getFlushTags(): ?string
     {
-        return parent::getData(self::FLUSH_TAGS);
+        return parent::getData(ScheduledCacheFlushInterface::FLUSH_TAGS);
     }
 
     /**
      * Function: getCreatedAt
      *
-     * @return array|mixed|null
+     * @return ?string
      */
-    public function getCreatedAt(): mixed
+    public function getCreatedAt(): ?string
     {
-        return parent::getData(self::CREATED_AT);
+        return parent::getData(ScheduledCacheFlushInterface::CREATED_AT);
     }
 
     /**
      * Function: getUpdatedAt
      *
-     * @return array|mixed|null
+     * @return ?string
      */
-    public function getUpdatedAt(): mixed
+    public function getUpdatedAt(): ?string
     {
-        return parent::getData(self::UPDATED_AT);
+        return parent::getData(ScheduledCacheFlushInterface::UPDATED_AT);
     }
 
     /**
@@ -78,35 +74,36 @@ class ScheduledCacheFlush extends AbstractModel
      *
      * @param int $id
      *
-     * @return ScheduledCacheFlush
+     * @return ScheduledCacheFlushInterface
+     * @noinspection PhpParameterNameChangedDuringInheritanceInspection
      */
-    public function setId($id): ScheduledCacheFlush
+    public function setId($id): ScheduledCacheFlushInterface
     {
-        return parent::setData(self::ID, $id);
+        return parent::setData(ScheduledCacheFlushInterface::ID, $id);
     }
 
     /**
      * Function: setFlushTime
      *
-     * @param string $flushTime
+     * @param DateTime $flushTime
      *
-     * @return ScheduledCacheFlush
+     * @return ScheduledCacheFlushInterface
      */
-    public function setFlushTime(string $flushTime): ScheduledCacheFlush
+    public function setFlushTime(DateTime $flushTime): ScheduledCacheFlushInterface
     {
-        return parent::setData(self::FLUSH_TIME, $flushTime);
+        return parent::setData(ScheduledCacheFlushInterface::FLUSH_TIME, $flushTime);
     }
 
     /**
      * Function: setFlushTags
      *
-     * @param array $flushTags
+     * @param ?string $flushTags
      *
-     * @return ScheduledCacheFlush
+     * @return ScheduledCacheFlushInterface
      */
-    public function setFlushTags(array $flushTags): ScheduledCacheFlush
+    public function setFlushTags(?string $flushTags): ScheduledCacheFlushInterface
     {
-        return parent::setData(self::FLUSH_TAGS, $flushTags);
+        return parent::setData(ScheduledCacheFlushInterface::FLUSH_TAGS, $flushTags);
     }
 
     /**
@@ -114,11 +111,11 @@ class ScheduledCacheFlush extends AbstractModel
      *
      * @param string $createdAt
      *
-     * @return ScheduledCacheFlush
+     * @return ScheduledCacheFlushInterface
      */
-    public function setCreatedAt(string $createdAt): ScheduledCacheFlush
+    public function setCreatedAt(string $createdAt): ScheduledCacheFlushInterface
     {
-        return parent::setData(self::CREATED_AT, $createdAt);
+        return parent::setData(ScheduledCacheFlushInterface::CREATED_AT, $createdAt);
     }
 
     /**
@@ -126,10 +123,10 @@ class ScheduledCacheFlush extends AbstractModel
      *
      * @param string $updatedAt
      *
-     * @return ScheduledCacheFlush
+     * @return ScheduledCacheFlushInterface
      */
-    public function setUpdatedAt(string $updatedAt): ScheduledCacheFlush
+    public function setUpdatedAt(string $updatedAt): ScheduledCacheFlushInterface
     {
-        return parent::setData(self::UPDATED_AT, $updatedAt);
+        return parent::setData(ScheduledCacheFlushInterface::UPDATED_AT, $updatedAt);
     }
 }

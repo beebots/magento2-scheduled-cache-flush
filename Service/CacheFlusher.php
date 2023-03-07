@@ -6,7 +6,7 @@ use Magento\Framework\Event\ManagerInterface;
 use Magento\Framework\Indexer\CacheContextFactory;
 
 /**
- * Used to flush a the magento full page cache
+ * Used to flush the magento full page cache
  */
 class CacheFlusher
 {
