@@ -82,9 +82,12 @@ class FlushCacheOnSchedule
         $timeZone = $this->dateTimeZoneFactory->create(['timezone' => $storeTimeZoneString]);
         $currentTime = $this->dateTimeFactory->create('now', $timeZone);
 
+        // Format: 2023-03-07T09:20:33-07:00
+        $currentTimeString = $currentTime->format('c');
+
         $currentCacheFlushes = $this->collectionFactory->create();
         $currentCacheFlushes
-            ->addFieldToFilter(ScheduledCacheFlush::FLUSH_TIME, ['lteq' => $currentTime->format('Y-m-d H:i:s')])
+            ->addFieldToFilter(ScheduledCacheFlush::FLUSH_TIME, ['lteq' => $currentTimeString])
             ->addOrder(
                 ScheduledCacheFlush::FLUSH_TIME,
                 SortOrder::SORT_ASC
@@ -92,8 +95,9 @@ class FlushCacheOnSchedule
 
         /** @var ScheduledCacheFlush $scheduledCacheFlush */
         foreach ($currentCacheFlushes as $scheduledCacheFlush) {
-            $tags = $scheduledCacheFlush->getFlushTags()
-                ? explode(' ', $scheduledCacheFlush->getFlushTags())
+            $tagString = trim($scheduledCacheFlush->getFlushTags() ?? '');
+            $tags = $tagString
+                ? explode(' ', $tagString)
                 : ['.*'];
 
             try {

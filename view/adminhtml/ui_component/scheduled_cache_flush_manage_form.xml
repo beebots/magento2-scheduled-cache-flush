@@ -79,6 +79,9 @@
                     <item name="visible" xsi:type="boolean">true</item>
                     <item name="dataType" xsi:type="string">text</item>
                     <item name="formElement" xsi:type="string">input</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
                     <item name="source" xsi:type="string">scheduled_cache_flush</item>
                     <item name="notice" xsi:type="string" translate="true">Space separated tags you want to flush. Category example: cat_c_123. Product example: cat_p_123. CMS block example: cms_b_123. CMS page example: cms_p_123</item>
                 </item>

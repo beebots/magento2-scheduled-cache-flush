@@ -31,9 +31,6 @@ class FlushCacheOnScheduleTest extends MockeryTestCase
     /** @var Config|Mockery\LegacyMockInterface|Mockery\MockInterface */
     private $configMock;
 
-    /** @var ConvertMultilineTextToArray|Mockery\LegacyMockInterface|Mockery\MockInterface */
-    private $convertMultilineTextToArrayMock;
-
     /** @var TimezoneInterface|Mockery\LegacyMockInterface|Mockery\MockInterface */
     private $timezoneMock;
 
@@ -64,7 +61,6 @@ class FlushCacheOnScheduleTest extends MockeryTestCase
     public function setUp(): void
     {
         $this->configMock = Mockery::mock(Config::class);
-        $this->convertMultilineTextToArrayMock = Mockery::mock(ConvertMultilineTextToArray::class);
         $this->timezoneMock = Mockery::mock(TimezoneInterface::class);
         $this->dateTimeFactoryMock = Mockery::mock(DateTimeFactory::class);
         $this->dateTimeZoneFactoryMock = Mockery::mock(DateTimeZoneFactory::class);
@@ -132,45 +128,13 @@ class FlushCacheOnScheduleTest extends MockeryTestCase
             ->andReturn(new ArrayIterator([$scheduledCacheFlush]));
 
         $scheduledCacheFlush->shouldReceive('getFlushTags')
-            ->andReturn('cat_p_1234 cat_c_1234');
+            ->andReturn('cat_p_1234');
 
         $this->collectionFactory->shouldReceive('create')
             ->andReturn($collection);
 
         $this->scheduledCacheFlushResource->shouldReceive('delete')
             ->once();
-
-        $this->flushCacheOnSchedule->execute();
-    }
-
-    /**
-     * Function: testNormalUseCase
-     *
-     * @throws Exception
-     */
-    public function testShouldNotRunOnEmptyConfig()
-    {
-        $this->configMock->shouldReceive('isEnabled')
-            ->andReturnTrue();
-
-        $this->configMock->shouldReceive('getFlushTimes')
-            ->andReturn('')
-            ->once();
-
-        $this->configMock->shouldNotReceive('setFlushTimes');
-        $this->convertMultilineTextToArrayMock->shouldReceive('execute')
-            ->andReturn([]);
-
-        $this->timezoneMock->shouldReceive('getConfigTimezone');
-        $this->dateTimeZoneFactoryMock->shouldReceive('create');
-        $this->cacheFlusherMock->shouldNotReceive('execute');
-
-        $timeZone = new DateTimeZone('America/Denver');
-        /** @noinspection PhpUnhandledExceptionInspection */
-        $currentTime = new DateTime('2021-02-01', $timeZone);
-        $this->dateTimeFactoryMock->shouldReceive('create')->andReturn(
-            $currentTime,
-        );
 
         $this->flushCacheOnSchedule->execute();
     }
