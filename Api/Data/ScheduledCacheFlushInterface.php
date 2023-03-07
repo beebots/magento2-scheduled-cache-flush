@@ -22,9 +22,9 @@ interface ScheduledCacheFlushInterface
     /**
      * Function: getFlushTime
      *
-     * @return ?DateTime
+     * @return ?string
      */
-    public function getFlushTime(): ?DateTime;
+    public function getFlushTime(): ?string;
 
     /**
      * Function: getFlushTags
@@ -59,11 +59,11 @@ interface ScheduledCacheFlushInterface
     /**
      * Function: setFlushTime
      *
-     * @param DateTime $flushTime
+     * @param string $flushTime
      *
      * @return ScheduledCacheFlushInterface
      */
-    public function setFlushTime(DateTime $flushTime): ScheduledCacheFlushInterface;
+    public function setFlushTime(string $flushTime): ScheduledCacheFlushInterface;
 
     /**
      * Function: setFlushTags

@@ -4,7 +4,6 @@ namespace BeeBots\ScheduledCacheFlush\Model;
 
 use BeeBots\ScheduledCacheFlush\Api\Data\ScheduledCacheFlushInterface;
 use BeeBots\ScheduledCacheFlush\Model\ResourceModel\ScheduledCacheFlush as ScheduledCacheFlushResource;
-use DateTime;
 use Magento\Framework\Model\AbstractModel;
 
 class ScheduledCacheFlush extends AbstractModel implements ScheduledCacheFlushInterface
@@ -32,9 +31,9 @@ class ScheduledCacheFlush extends AbstractModel implements ScheduledCacheFlushIn
     /**
      * Function: getFlushTime
      *
-     * @return ?DateTime
+     * @return ?string
      */
-    public function getFlushTime(): ?DateTime
+    public function getFlushTime(): ?string
     {
         return parent::getData(ScheduledCacheFlushInterface::FLUSH_TIME);
     }
@@ -85,11 +84,11 @@ class ScheduledCacheFlush extends AbstractModel implements ScheduledCacheFlushIn
     /**
      * Function: setFlushTime
      *
-     * @param DateTime $flushTime
+     * @param string $flushTime
      *
      * @return ScheduledCacheFlushInterface
      */
-    public function setFlushTime(DateTime $flushTime): ScheduledCacheFlushInterface
+    public function setFlushTime(string $flushTime): ScheduledCacheFlushInterface
     {
         return parent::setData(ScheduledCacheFlushInterface::FLUSH_TIME, $flushTime);
     }
