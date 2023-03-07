@@ -12,10 +12,8 @@ use BeeBots\ScheduledCacheFlush\Model\ResourceModel\ScheduledCacheFlush\Collecti
 use BeeBots\ScheduledCacheFlush\Model\ResourceModel\ScheduledCacheFlush\CollectionFactory;
 use BeeBots\ScheduledCacheFlush\Model\ScheduledCacheFlush;
 use BeeBots\ScheduledCacheFlush\Service\CacheFlusher;
-use BeeBots\ScheduledCacheFlush\Utilities\ConvertMultilineTextToArray;
 use DateTime;
 use Exception;
-use Magento\Backend\Model\Menu\Filter\Iterator;
 use Magento\Framework\Intl\DateTimeFactory;
 use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
