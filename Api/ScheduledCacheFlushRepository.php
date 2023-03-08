@@ -13,9 +13,8 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Throwable;
 
 /**
- * CMS page CRUD interface.
+ * ScheduledCacheFlushRepositoryInterface page CRUD interface.
  * @api
- * @since 100.0.2
  */
 class ScheduledCacheFlushRepository implements ScheduledCacheFlushRepositoryInterface
 {
