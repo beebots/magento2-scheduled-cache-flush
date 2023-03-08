@@ -38,8 +38,6 @@ class FlushCacheOnSchedule
     private LoggerInterface $logger;
 
     /**
-     * CacheFlusher constructor.
-     *
      * @param Config $config
      * @param TimezoneInterface $timezone
      * @param DateTimeFactory $dateTimeFactory
@@ -47,6 +45,7 @@ class FlushCacheOnSchedule
      * @param CacheFlusher $cacheFlusher
      * @param CollectionFactory $collectionFactory
      * @param ScheduledCacheFlushResource $scheduledCacheFlushResource
+     * @param LoggerInterface $logger
      */
     public function __construct(
         Config $config,

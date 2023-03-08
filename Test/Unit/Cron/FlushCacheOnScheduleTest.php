@@ -16,7 +16,6 @@ use DateTime;
 use Exception;
 use Magento\Framework\Intl\DateTimeFactory;
 use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
-use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Psr\Log\LoggerInterface;
@@ -24,37 +23,37 @@ use Psr\Log\LoggerInterface;
 class FlushCacheOnScheduleTest extends MockeryTestCase
 {
     /** @var FlushCacheOnSchedule */
-    private $flushCacheOnSchedule;
+    private FlushCacheOnSchedule $flushCacheOnSchedule;
 
     /** @var Config|Mockery\LegacyMockInterface|Mockery\MockInterface */
-    private $configMock;
+    private Config|Mockery\LegacyMockInterface|Mockery\MockInterface $configMock;
 
     /** @var TimezoneInterface|Mockery\LegacyMockInterface|Mockery\MockInterface */
-    private $timezoneMock;
+    private TimezoneInterface|Mockery\LegacyMockInterface|Mockery\MockInterface $timezoneMock;
 
     /** @var DateTimeFactory|Mockery\LegacyMockInterface|Mockery\MockInterface */
-    private $dateTimeFactoryMock;
+    private DateTimeFactory|Mockery\LegacyMockInterface|Mockery\MockInterface $dateTimeFactoryMock;
 
     /** @var DateTimeZoneFactory|Mockery\LegacyMockInterface|Mockery\MockInterface */
-    private $dateTimeZoneFactoryMock;
+    private DateTimeZoneFactory|Mockery\LegacyMockInterface|Mockery\MockInterface $dateTimeZoneFactoryMock;
 
     /** @var CacheFlusher|Mockery\LegacyMockInterface|Mockery\MockInterface */
-    private $cacheFlusherMock;
+    private CacheFlusher|Mockery\LegacyMockInterface|Mockery\MockInterface $cacheFlusherMock;
 
     /**
      * @var Mockery\LegacyMockInterface|CollectionFactory|Mockery\MockInterface
      */
-    private $collectionFactory;
+    private Mockery\LegacyMockInterface|CollectionFactory|Mockery\MockInterface $collectionFactory;
 
     /**
      * @var ScheduledCacheFlushResource|Mockery\MockInterface|Mockery\LegacyMockInterface
      */
-    private $scheduledCacheFlushResource;
+    private ScheduledCacheFlushResource|Mockery\MockInterface|Mockery\LegacyMockInterface $scheduledCacheFlushResource;
 
     /**
      * @var LoggerInterface|Mockery\LegacyMockInterface|Mockery\MockInterface
      */
-    private $logger;
+    private LoggerInterface|Mockery\LegacyMockInterface|Mockery\MockInterface $logger;
 
     public function setUp(): void
     {
@@ -67,19 +66,15 @@ class FlushCacheOnScheduleTest extends MockeryTestCase
         $this->scheduledCacheFlushResource = Mockery::mock(ScheduledCacheFlushResource::class);
         $this->logger = Mockery::mock(LoggerInterface::class);
 
-        $objectManager = new ObjectManager($this);
-        $this->flushCacheOnSchedule = $objectManager->getObject(
-            FlushCacheOnSchedule::class,
-            [
-                'config' => $this->configMock,
-                'timezone' => $this->timezoneMock,
-                'dateTimeFactory' => $this->dateTimeFactoryMock,
-                'dateTimeZoneFactory' => $this->dateTimeZoneFactoryMock,
-                'cacheFlusher' => $this->cacheFlusherMock,
-                'collectionFactory' => $this->collectionFactory,
-                'scheduledCacheFlushResource' => $this->scheduledCacheFlushResource,
-                'logger' => $this->logger,
-            ]
+        $this->flushCacheOnSchedule = new FlushCacheOnSchedule(
+            $this->configMock,
+            $this->timezoneMock,
+            $this->dateTimeFactoryMock,
+            $this->dateTimeZoneFactoryMock,
+            $this->cacheFlusherMock,
+            $this->collectionFactory,
+            $this->scheduledCacheFlushResource,
+            $this->logger,
         );
     }
 
