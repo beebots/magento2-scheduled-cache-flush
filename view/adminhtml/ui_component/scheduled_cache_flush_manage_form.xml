@@ -83,7 +83,13 @@
                         <item name="required-entry" xsi:type="boolean">true</item>
                     </item>
                     <item name="source" xsi:type="string">scheduled_cache_flush</item>
-                    <item name="notice" xsi:type="string" translate="true">Space separated tags you want to flush. Category example: cat_c_123. Product example: cat_p_123. CMS block example: cms_b_home-page-top-feature-container. CMS page example: cms_p_123</item>
+                    <item name="notice" xsi:type="string" translate="true">Space separated tags you want to flush.
+                        Category example: cat_c_123,
+                        Product example: cat_p_123,
+                        CMS block example: cms_b_home-page-top-feature-container,
+                        CMS page example: cms_p_123,
+                        Flush everything: .*
+                    </item>
                 </item>
             </argument>
         </field>
