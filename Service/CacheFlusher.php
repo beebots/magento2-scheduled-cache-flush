@@ -10,8 +10,7 @@ use Magento\Framework\Indexer\CacheContextFactory;
  */
 class CacheFlusher
 {
-    /** @var ManagerInterface */
-    private $eventManager;
+    private ManagerInterface $eventManager;
 
     private CacheContextFactory $cacheContextFactory;
 
