@@ -9,5 +9,9 @@
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="id"/>
         </constraint>
+        <index referenceId="BEEBOTS_SCHEDULED_CACHE_FLUSH_FLUSH_TIME_FLUSH_TAGS" indexType="btree">
+            <column name="flush_time"/>
+            <column name="flush_tags"/>
+        </index>
     </table>
 </schema>
