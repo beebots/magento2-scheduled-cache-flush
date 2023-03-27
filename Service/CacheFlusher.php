@@ -2,6 +2,7 @@
 
 namespace BeeBots\ScheduledCacheFlush\Service;
 
+use Magento\Framework\App\CacheInterface;
 use Magento\Framework\Event\ManagerInterface;
 use Magento\Framework\Indexer\CacheContextFactory;
 
@@ -14,18 +15,23 @@ class CacheFlusher
 
     private CacheContextFactory $cacheContextFactory;
 
+    private CacheInterface $cache;
+
     /**
      * CacheFlusher constructor.
      *
      * @param ManagerInterface $eventManager
      * @param CacheContextFactory $cacheContextFactory
+     * @param CacheInterface $cache
      */
     public function __construct(
         ManagerInterface $eventManager,
-        CacheContextFactory $cacheContextFactory
+        CacheContextFactory $cacheContextFactory,
+        CacheInterface $cache
     ) {
         $this->eventManager = $eventManager;
         $this->cacheContextFactory = $cacheContextFactory;
+        $this->cache = $cache;
     }
 
     /**
@@ -40,6 +46,7 @@ class CacheFlusher
         $cacheContext = $this->cacheContextFactory->create();
         $cacheContext->registerTags($tags);
         $this->eventManager->dispatch('clean_cache_by_tags', ['object' => $cacheContext]);
+        $this->cache->clean($tags);
 
         return $this;
     }
