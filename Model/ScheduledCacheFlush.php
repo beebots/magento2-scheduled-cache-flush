@@ -73,7 +73,7 @@ class ScheduledCacheFlush extends AbstractModel implements ScheduledCacheFlushIn
      *
      * @param int $id
      *
-     * @return ScheduledCacheFlushInterface
+     * @return \BeeBots\ScheduledCacheFlush\Api\Data\ScheduledCacheFlushInterface
      * @noinspection PhpParameterNameChangedDuringInheritanceInspection
      */
     public function setId($id): ScheduledCacheFlushInterface
@@ -86,7 +86,7 @@ class ScheduledCacheFlush extends AbstractModel implements ScheduledCacheFlushIn
      *
      * @param string $flushTime
      *
-     * @return ScheduledCacheFlushInterface
+     * @return \BeeBots\ScheduledCacheFlush\Api\Data\ScheduledCacheFlushInterface
      */
     public function setFlushTime(string $flushTime): ScheduledCacheFlushInterface
     {
@@ -98,7 +98,7 @@ class ScheduledCacheFlush extends AbstractModel implements ScheduledCacheFlushIn
      *
      * @param ?string $flushTags
      *
-     * @return ScheduledCacheFlushInterface
+     * @return \BeeBots\ScheduledCacheFlush\Api\Data\ScheduledCacheFlushInterface
      */
     public function setFlushTags(?string $flushTags): ScheduledCacheFlushInterface
     {
@@ -110,7 +110,7 @@ class ScheduledCacheFlush extends AbstractModel implements ScheduledCacheFlushIn
      *
      * @param string $createdAt
      *
-     * @return ScheduledCacheFlushInterface
+     * @return \BeeBots\ScheduledCacheFlush\Api\Data\ScheduledCacheFlushInterface
      */
     public function setCreatedAt(string $createdAt): ScheduledCacheFlushInterface
     {
@@ -122,7 +122,7 @@ class ScheduledCacheFlush extends AbstractModel implements ScheduledCacheFlushIn
      *
      * @param string $updatedAt
      *
-     * @return ScheduledCacheFlushInterface
+     * @return \BeeBots\ScheduledCacheFlush\Api\Data\ScheduledCacheFlushInterface
      */
     public function setUpdatedAt(string $updatedAt): ScheduledCacheFlushInterface
     {

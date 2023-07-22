@@ -9,7 +9,7 @@ use BeeBots\ScheduledCacheFlush\Service\CacheFlusher;
  *
  * @api
  */
-class FlushCacheByTags
+class FlushCacheByTags implements FlushCacheByTagsInterface
 {
     private CacheFlusher $cacheFlusher;
 

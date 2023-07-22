@@ -8,7 +8,7 @@
         </resources>
     </route>
     <route url="/V1/flushCacheByTags" method="POST">
-        <service class="BeeBots\ScheduledCacheFlush\Api\FlushCacheByTags" method="execute"/>
+        <service class="BeeBots\ScheduledCacheFlush\Api\FlushCacheByTagsInterface" method="execute"/>
         <resources>
             <resource ref="Magento_Backend::cache"/>
         </resources>

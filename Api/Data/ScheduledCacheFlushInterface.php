@@ -52,7 +52,7 @@ interface ScheduledCacheFlushInterface
      *
      * @param int $id
      *
-     * @return ScheduledCacheFlushInterface
+     * @return \BeeBots\ScheduledCacheFlush\Api\Data\ScheduledCacheFlushInterface
      */
     public function setId(int $id): ScheduledCacheFlushInterface;
 
@@ -61,7 +61,7 @@ interface ScheduledCacheFlushInterface
      *
      * @param string $flushTime
      *
-     * @return ScheduledCacheFlushInterface
+     * @return \BeeBots\ScheduledCacheFlush\Api\Data\ScheduledCacheFlushInterface
      */
     public function setFlushTime(string $flushTime): ScheduledCacheFlushInterface;
 
@@ -70,7 +70,7 @@ interface ScheduledCacheFlushInterface
      *
      * @param string $flushTags
      *
-     * @return ScheduledCacheFlushInterface
+     * @return \BeeBots\ScheduledCacheFlush\Api\Data\ScheduledCacheFlushInterface
      */
     public function setFlushTags(string $flushTags): ScheduledCacheFlushInterface;
 
@@ -79,7 +79,7 @@ interface ScheduledCacheFlushInterface
      *
      * @param string $createdAt
      *
-     * @return ScheduledCacheFlushInterface
+     * @return \BeeBots\ScheduledCacheFlush\Api\Data\ScheduledCacheFlushInterface
      */
     public function setCreatedAt(string $createdAt): ScheduledCacheFlushInterface;
 
@@ -88,7 +88,7 @@ interface ScheduledCacheFlushInterface
      *
      * @param string $updatedAt
      *
-     * @return ScheduledCacheFlushInterface
+     * @return \BeeBots\ScheduledCacheFlush\Api\Data\ScheduledCacheFlushInterface
      */
     public function setUpdatedAt(string $updatedAt): ScheduledCacheFlushInterface;
 }

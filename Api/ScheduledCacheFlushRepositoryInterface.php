@@ -12,9 +12,9 @@ interface ScheduledCacheFlushRepositoryInterface
     /**
      * Function: save
      *
-     * @param ScheduledCacheFlushInterface $scheduledCacheFlush
+     * @param \BeeBots\ScheduledCacheFlush\Api\Data\ScheduledCacheFlushInterface $scheduledCacheFlush
      *
-     * @return ScheduledCacheFlushInterface
+     * @return \BeeBots\ScheduledCacheFlush\Api\Data\ScheduledCacheFlushInterface
      */
     public function save(ScheduledCacheFlushInterface $scheduledCacheFlush): ScheduledCacheFlushInterface;
 }
